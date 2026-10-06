@@ -64,7 +64,6 @@ public class TextGame {
             
             System.out.print("TextGame> ");
             String command = sc.nextLine();
-
             String[] commandlets = command.split(" ");
 
             switch (commandlets[0]) {
