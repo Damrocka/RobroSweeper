@@ -25,7 +25,6 @@ public class Game {
     public Player[] players() {
         return players.toArray(Player[]::new);
     }
-
     public void print() {
         board.print();
     }

@@ -1,5 +1,3 @@
-
-
 public class Board {
 
     private static final int ROWS = 6;
