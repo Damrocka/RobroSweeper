@@ -73,6 +73,11 @@ public class Board {
         }
         lastLine += "╝";
 
+        String columnLine = " ";
+        for (int col = 0; col < COLS; col++) {
+            columnLine += " %i  ".formatted(col + 1);
+        }
+
 
         System.out.println(firstLine);
         for (int row = 0; row < ROWS; row++) {
@@ -84,7 +89,7 @@ public class Board {
                 String character = " ";
 
                 // to color the tile
-                if (true) { // cell.owner() != null
+                if (true) { // cell.owner() != null temp
                     
                     if (cell.isBomb()) {
                         character = "X";
@@ -95,7 +100,7 @@ public class Board {
                         }
                     }
 
-                    String colorCode = "\u001B[34m"; //cells[row][col].owner().colorCode();
+                    String colorCode = "\u001B[34m"; // temp
                     String colorEnd = "\u001B[0m";
 
                     character = colorCode + character + colorEnd;
@@ -113,6 +118,7 @@ public class Board {
 
         }
         System.out.println(lastLine);
+        System.out.println(columnLine);
 
     }
 

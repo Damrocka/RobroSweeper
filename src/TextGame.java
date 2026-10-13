@@ -2,6 +2,7 @@ import java.util.*;
 
 public class TextGame {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private static ArrayList<Player> players = new ArrayList<>();
 
     private static Player findPlayer(String name) {
