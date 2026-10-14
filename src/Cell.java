@@ -1,5 +1,5 @@
 public class Cell {
-
+    
     private boolean isBomb = false;
     private Player owner;
 

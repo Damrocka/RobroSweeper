@@ -37,7 +37,7 @@ public class Board {
         }
     }
 
-    public Cell currentCell(int row, int col) {
+    public Cell cell(int row, int col) {
         return cells[row][col];
     }
     public int getRows() {
