@@ -37,21 +37,24 @@ public class Board {
         }
     }
 
-    public Cell currentCell(int row, int col) {
+    public Cell cell(int row, int col) {
         return cells[row][col];
     }
+
     public int getRows() {
         return ROWS;
     }
+
     public int getCols() {
         return COLS;
     }
+
     public int findLandingRow(int col) {
         for (int i = ROWS - 1; i >= 0; i--) { // THE LOOP RUNS BACKWORDS
             if (!cells[i][col].isOccupied()) {
                 return i; // returns the next free space in a column
-                }   
-            }
+            }   
+        }
         return -1; //-1 means the column is full
     }
 
