@@ -134,7 +134,7 @@ public class Board {
 
     }
 
-    private int findBombCount(int row, int col) {
+    public int findBombCount(int row, int col) {
 
         int bombCount = 0;
 
