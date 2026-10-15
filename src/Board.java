@@ -1,7 +1,7 @@
 public class Board {
 
-    private static final int ROWS = 6;
-    private static final int COLS = 7;
+    private static final int ROWS = 10;
+    private static final int COLS = 10;
     // i know im so funny
 
     private final Cell[][] cells;
@@ -40,6 +40,24 @@ public class Board {
     public Cell cell(int row, int col) {
         return cells[row][col];
     }
+
+    public int getRows() {
+        return ROWS;
+    }
+
+    public int getCols() {
+        return COLS;
+    }
+
+    public int findLandingRow(int col) {
+        for (int i = ROWS - 1; i >= 0; i--) { // THE LOOP RUNS BACKWORDS
+            if (!cells[i][col].isOccupied()) {
+                return i; // returns the next free space in a column
+            }   
+        }
+        return -1; //-1 means the column is full
+    }
+
 
     public void print() {
         
@@ -122,7 +140,7 @@ public class Board {
 
     }
 
-    private int findBombCount(int row, int col) {
+    public int findBombCount(int row, int col) {
 
         int bombCount = 0;
 
