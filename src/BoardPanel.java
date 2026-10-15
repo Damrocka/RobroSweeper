@@ -1,16 +1,25 @@
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
 public class BoardPanel extends JPanel {
 
     private final Board board;
+    private MouseListener m;
     private static final int CELL_SIZE = 80;
     private static final int PADDING = CELL_SIZE / 8;
+    /**
+     * 
+     * 
+     * 
+     */
 
     public BoardPanel(Board board) {
         this.board = board;
+        BoardClickListener meow = new BoardClickListener();  //change from meow to something meaningful like 
+        this.addMouseListener(meow);
         int rows = board.getRows();
         int cols = board.getCols();
         this.setBackground(Color.white);
@@ -37,9 +46,33 @@ public class BoardPanel extends JPanel {
     }
 
     private class BoardClickListener extends MouseAdapter {
+        Player player = new Player("leon", "red");
+        int mx;
+        int my;
+        int colnum;
+        int rownum;
         @Override 
         public void mousePressed(MouseEvent m){
-            m.getX();
+
+            mx = m.getX();
+            System.out.println(" Test my:  " + (my));
+            colnum = mx / CELL_SIZE;
+            System.out.println(" Test col:  " + (colnum + 1));
+            rownum = onColumnClicked(colnum);
+            System.out.println((rownum + 1) + " " + (colnum + 1));
+
+            if (!board.cell(rownum, colnum ).isOccupied()) {
+                board.cell(rownum, colnum).setOwner(player);
+                repaint();
+            } else {
+                
+            }
+            
+        }
+        private int onColumnClicked(int col) {
+            int row;
+            row = board.findLandingRow(col);
+            return row;
         }
     }
 
