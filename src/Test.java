@@ -11,7 +11,6 @@ public class Test {
             if (res != -1) {
                 myBoard.cell(myBoard.getRows() - 1 - i, 3).setOwner(player);
             }
-            
             //TEST
         }
         SwingUtilities.invokeLater(() -> {

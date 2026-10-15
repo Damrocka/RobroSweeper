@@ -1,7 +1,7 @@
 public class Board {
 
-    private static final int ROWS = 6;
-    private static final int COLS = 7;
+    private static final int ROWS = 10;
+    private static final int COLS = 10;
     // i know im so funny
 
     private final Cell[][] cells;
