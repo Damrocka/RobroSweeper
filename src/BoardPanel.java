@@ -3,7 +3,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
-
 public class BoardPanel extends JPanel {
     
     private final Board board;
@@ -86,18 +85,20 @@ public class BoardPanel extends JPanel {
         
         @Override 
         public void mousePressed(MouseEvent m){
-
+            
             int mx;
             int colnum;
             int rownum;   
             mx = m.getX();            
             colnum = mx / CELL_SIZE;
+
             if (!(colnum >= 0 && colnum < board.getCols())){
                 return;
             }
             rownum = onColumnClicked(colnum); 
 
             if (rownum != -1 ) {
+                
                 board.cell(rownum, colnum).setOwner(player);
                 repaint();
             }
