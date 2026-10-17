@@ -1,12 +1,12 @@
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 public class BoardPanel extends JPanel {
+
     
+    private final Game game;
     private final Board board;
-    private MouseListener m;
     private static final int CELL_SIZE = 80;
     private static final int PADDING = CELL_SIZE / 8;
     
@@ -16,8 +16,9 @@ public class BoardPanel extends JPanel {
      * 
      */
 
-    public BoardPanel(Board board) {
-        this.board = board;
+    public BoardPanel(Game game) {
+        this.game = game;
+        this.board = game.getBoard();
         BoardClickListener meow = new BoardClickListener();  //change from meow to something meaningful like 
         this.addMouseListener(meow);
         int rows = board.getRows();
@@ -51,11 +52,11 @@ public class BoardPanel extends JPanel {
                 //g2.drawString("X", x + CELL_SIZE / 2, y + CELL_SIZE / 2);
         
         }
-    private void  drawNumber (Graphics2D g2, int col, int centerX, int centerY, int row) {
+    private void  drawNumber (Graphics2D g2, int centerX, int centerY, int n) {
 
                 
                 int bombNum;    
-                bombNum = board.findBombCount(row,col);
+                bombNum = n;
                 drawCenteredText(g2 , String.valueOf(bombNum) , centerX, centerY);
                 //g2.drawString(String.valueOf(bombNum), centerX + CELL_SIZE / 2, centerY + CELL_SIZE / 2);
         
@@ -73,35 +74,22 @@ public class BoardPanel extends JPanel {
         g2.drawString(text, cx - (width / 2), cy + (ascent/ 2) );
 
     }   
-    
-    private int onColumnClicked(int col) {
-            int row;
-            row = board.findLandingRow(col);
-            return row;
-        }
 
     private class BoardClickListener extends MouseAdapter {
-        Player player = new Player("leon", "red");
-        
+          
         @Override 
-        public void mousePressed(MouseEvent m){
-            
+        public void mousePressed(MouseEvent e){
             int mx;
+            mx = e.getX();            
             int colnum;
-            int rownum;   
-            mx = m.getX();            
-            colnum = mx / CELL_SIZE;
-
+          
+            colnum = mx / CELL_SIZE;  
             if (!(colnum >= 0 && colnum < board.getCols())){
                 return;
-            }
-            rownum = onColumnClicked(colnum); 
+            } 
 
-            if (rownum != -1 ) {
-                
-                board.cell(rownum, colnum).setOwner(player);
-                repaint();
-            }
+            game.placePiece(colnum);
+            repaint();
             
         }
     
@@ -134,14 +122,15 @@ public class BoardPanel extends JPanel {
                 if (cell.isOccupied()) {
                         int centerX = x + CELL_SIZE / 2;
                         int centerY = y + CELL_SIZE / 2;
+                        int n;
                         g2.setColor(stringToColor(cell.owner().color()));
                         
                         if (cell.isBomb()) {
                             
                             drawBomb(g2, centerX, centerY);
                         } else { 
-                            
-                            drawNumber(g2, col, centerX, centerY, row);
+                            n = board.findBombCount(row, col);
+                            drawNumber(g2,centerX, centerY, n);
                         //set up setFont, getFontMetrics(), stringWidth,getAscent, 
 
                     } 
