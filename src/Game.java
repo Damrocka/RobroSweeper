@@ -1,34 +1,30 @@
 public class Game {
     
-    private Board board;
-    private Player redPlayer;
-    private Player bluePlayer;
+    private final ArrayList<Player> players = new ArrayList<>();
+    private final Board board = new Board(0.25f);
 
+    public void newPlayer(String name, String color) {
+
+        for (Player player : players) {
+            if (player.name().equals(name)) {
+                System.out.println("That name is already in use.");
+                return;
+            }
+        }
+
+        if (!color.equals("red") && !color.equals("blue") && !color.equals("green")) {
+            System.out.println("That color is unavailable");
+            return;
+        }
+        players.add(new Player(name, color));
+
+    }
+
+    public Player[] players() {
+        return players.toArray(Player[]::new);
+    }
     public void print() {
         board.print();
     }
-
-    public void init(Player first, Player second) {
-        board = new Board(0.25f);
-        redPlayer = first;
-        bluePlayer = second;
-        game();
-    }
-
-    public void init(Player first, Player second, Float bombDensity) {
-        board = new Board(bombDensity);
-        redPlayer = first;
-        bluePlayer = second;
-        game();
-    }
-
-    private void game() {
-
-        System.out.println("%s is the red player".formatted(redPlayer.name()));
-        System.out.println("%s is the blue player".formatted(bluePlayer.name()));
-
-        // implement the rest
-
-    }
-
 }
+    
