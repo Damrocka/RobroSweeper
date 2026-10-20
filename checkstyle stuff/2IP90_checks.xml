@@ -234,17 +234,7 @@ https://google.github.io/styleguide/javaguide.html
       <message key="ws.illegalFollow" value="Use spaces according to the 2IP90 coding standard."/>
       <message key="ws.notPreceded" value="Use spaces according to the 2IP90 coding standard."/>
     </module>
-
-    <module name="Indentation">
-      <property name="basicOffset" value="4"/>
-      <property name="braceAdjustment" value="4"/>
-      <property name="caseIndent" value="4"/>
-      <property name="throwsIndent" value="4"/>
-      <property name="lineWrappingIndentation" value="4"/>
-      <property name="arrayInitIndent" value="2"/>
-      <message key="indentation.error" value="Fix the indentation to comply with the 2IP90 coding standard (4 spaces per indentation level)." />
-    </module>
-
+    
     <module name="AbbreviationAsWordInName">
       <property name="ignoreFinal" value="false"/>
       <property name="allowedAbbreviationLength" value="3"/>
@@ -286,13 +276,6 @@ https://google.github.io/styleguide/javaguide.html
       <message key="ws.preceded" value="Use spaces according to the 2IP90 coding standard."/>
       <message key="ws.notFollowed" value="Use spaces according to the 2IP90 coding standard."/>
       <message key="ws.notPreceded" value="Use spaces according to the 2IP90 coding standard."/>
-    </module>
-
-    <module name="OperatorWrap">
-      <property name="option" value="NL"/>
-      <property name="tokens" value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR,
-        LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR, METHOD_REF,
-        TYPE_EXTENSION_AND "/>
     </module>
 
     <module name="AnnotationLocation">

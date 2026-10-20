@@ -58,7 +58,6 @@ public class Board {
         return -1; //-1 means the column is full
     }
 
-
     public void print() {
         
         String firstLine = "╔";

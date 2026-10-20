@@ -1,3 +1,8 @@
+/***
+ * quick tldr, this file was made for testing, but is as of now unfinished
+ * i doubt well end up finishing this since we need to build a GUI based game
+ */
+
 import java.util.*;
 
 public class TextGame {
