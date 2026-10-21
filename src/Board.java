@@ -58,87 +58,6 @@ public class Board {
         return -1; //-1 means the column is full
     }
 
-    public void print() {
-        
-        String firstLine = "╔";
-        for (int col = 0; col < COLS; col++) {
-            firstLine += "═══";
-
-            if (col < COLS - 1) {
-                firstLine += "╦";
-            }
-        }
-        firstLine += "╗";
-
-        String midLine = "╠";
-        for (int col = 0; col < COLS; col++) {
-            midLine += "═══";
-
-            if (col < COLS - 1) {
-                midLine += "╬";
-            }
-        }
-        midLine += "╣"; 
-
-        String lastLine = "╚";
-        for (int col = 0; col < COLS; col++) {
-            lastLine += "═══";
-
-            if (col < COLS - 1) {
-                lastLine += "╩";
-            }
-        }
-        lastLine += "╝";
-
-        String columnLine = " ";
-        for (int col = 0; col < COLS; col++) {
-            columnLine += " %i  ".formatted(col + 1);
-        }
-
-
-        System.out.println(firstLine);
-        for (int row = 0; row < ROWS; row++) {
-
-            String valueRow = "║";
-            for (int col = 0; col < COLS; col++) {
-
-                Cell cell = cells[row][col];
-                String character = " ";
-
-                // to color the tile
-                if (true) { // cell.owner() != null temp
-                    
-                    if (cell.isBomb()) {
-                        character = "X";
-                    } else {
-                        int bombCount = findBombCount(row, col);
-                        if (bombCount != 0) {
-                            character = "" + bombCount;
-                        }
-                    }
-
-                    String colorCode = "\u001B[34m"; // temp
-                    String colorEnd = "\u001B[0m";
-
-                    character = colorCode + character + colorEnd;
-
-                }
-
-                valueRow += " %s ║".formatted(character);
-            }
-
-            System.out.println(valueRow);
-
-            if (row < ROWS - 1) {
-                System.out.println(midLine);
-            }
-
-        }
-        System.out.println(lastLine);
-        System.out.println(columnLine);
-
-    }
-
     public int findBombCount(int row, int col) {
 
         int bombCount = 0;
@@ -160,3 +79,89 @@ public class Board {
 
     }
 }
+
+/**
+ * HALL OF FAME :
+ * 
+*   public void print() {
+            
+            String firstLine = "╔";
+            for (int col = 0; col < COLS; col++) {
+                firstLine += "═══";
+
+                if (col < COLS - 1) {
+                    firstLine += "╦";
+                }
+            }
+            firstLine += "╗";
+
+            String midLine = "╠";
+            for (int col = 0; col < COLS; col++) {
+                midLine += "═══";
+
+                if (col < COLS - 1) {
+                    midLine += "╬";
+                }
+            }
+            midLine += "╣"; 
+
+            String lastLine = "╚";
+            for (int col = 0; col < COLS; col++) {
+                lastLine += "═══";
+
+                if (col < COLS - 1) {
+                    lastLine += "╩";
+                }
+            }
+            lastLine += "╝";
+
+            String columnLine = " ";
+            for (int col = 0; col < COLS; col++) {
+                columnLine += " %i  ".formatted(col + 1);
+            }
+
+
+            System.out.println(firstLine);
+            for (int row = 0; row < ROWS; row++) {
+
+                String valueRow = "║";
+                for (int col = 0; col < COLS; col++) {
+
+                    Cell cell = cells[row][col];
+                    String character = " ";
+
+                    // to color the tile
+                    if (true) { // cell.owner() != null temp
+                        
+                        if (cell.isBomb()) {
+                            character = "X";
+                        } else {
+                            int bombCount = findBombCount(row, col);
+                            if (bombCount != 0) {
+                                character = "" + bombCount;
+                            }
+                        }
+
+                        String colorCode = "\u001B[34m"; // temp
+                        String colorEnd = "\u001B[0m";
+
+                        character = colorCode + character + colorEnd;
+
+                    }
+
+                    valueRow += " %s ║".formatted(character);
+                }
+
+                System.out.println(valueRow);
+
+                if (row < ROWS - 1) {
+                    System.out.println(midLine);
+                }
+
+            }
+            System.out.println(lastLine);
+            System.out.println(columnLine);
+
+        }
+
+ */

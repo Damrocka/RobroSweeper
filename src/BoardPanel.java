@@ -7,16 +7,7 @@ public class BoardPanel extends JPanel {
 
     private final Game game;
     private final Board board;
-
-    private enum Phase {
-        IDLE,
-        CHOOSING_GUESS
-    }
-
-    private boolean guessBomb;
-    private Phase phase = Phase.IDLE;
-    private int pendingColumn = -1;
-    private int pendingRow;
+    
     private static final int CELL_SIZE = 80;
     private static final int PADDING = CELL_SIZE / 8;
 
@@ -45,16 +36,6 @@ public class BoardPanel extends JPanel {
             int colnum;
             colnum = mouseX / CELL_SIZE;
             
-            if (e.getButton() == MouseEvent.BUTTON2 && phase == Phase.CHOOSING_GUESS) {
-                pendingRow = board.findLandingRow(pendingColumn);
-                game.submitGuess(pendingRow, pendingColumn, guessBomb);
-                repaint();
-            }
-
-            if (phase != Phase.IDLE) {
-                return;
-            }
-
             if (!(colnum >= 0 && colnum < board.getCols())) {
                 return;
             } 
@@ -64,59 +45,34 @@ public class BoardPanel extends JPanel {
             }
         
             if (e.getButton() == MouseEvent.BUTTON1) {
-                pendingColumn = colnum;
-                phase = Phase.CHOOSING_GUESS;
-                guessBomb = false;
+                
+                game.placePiece(colnum, false);
+                System.out.println("guessed empty square");
                 repaint();
         
             } else if (e.getButton() == MouseEvent.BUTTON3) {
-                pendingColumn = colnum;
-                phase = Phase.CHOOSING_GUESS;
-                guessBomb = true;
+                
+                game.placePiece(colnum, true);
+                System.out.println("guessed flag");
                 repaint();
             
             }
         }
     }    
             
-    private void onGuess(boolean guessBomb) {
-        if (phase != Phase.CHOOSING_GUESS) {
-            return;
-        }
-        game.placePiece(pendingColumn, guessBomb);
-        pendingColumn = -1;
-        phase = Phase.IDLE;
-        repaint();
-    }
-
     private void drawBomb(Graphics2D g2, int centerX, int centerY) {
-
         drawCenteredText(g2, "X", centerX, centerY);
-        //g2.drawString("X", x + CELL_SIZE / 2, y + CELL_SIZE / 2);
-
     }
 
-    private void drawNumber(Graphics2D g2, int centerX, int centerY, int n) {
-   
-        int bombCount = n;    
-        drawCenteredText(g2, String.valueOf(bombCount), centerX, centerY);
-        //g2.drawString(String.valueOf(bombNum), centerX + CELL_SIZE / 2, centerY + CELL_SIZE / 2);
-
-    }
-
-    private void drawFlag(Graphics2D g2, int centerX, int centerY) {
-   
-        drawCenteredText(g2, "F", centerX, centerY);
-
+    private void drawNumber(Graphics2D g2, int centerX, int centerY, int bombCount) {
+        drawCenteredText(g2, String.valueOf(bombCount), centerX, centerY);        
     }
 
     private void drawCenteredText(Graphics2D g2, String text, int centerX, int centerY) {
 
         int width;
         int ascent;
-        
         FontMetrics fm = g2.getFontMetrics();
-        
         width = fm.stringWidth(text);
         ascent = fm.getAscent();
         g2.drawString(text, centerX - (width / 2), centerY + (ascent / 2));
@@ -155,10 +111,7 @@ public class BoardPanel extends JPanel {
                 g2.setColor(Color.BLACK);
                 g2.drawRect(x, y, CELL_SIZE, CELL_SIZE);
                 
-                if (cell.isFlagged()) {
-                    drawFlag(g2, centerX, centerY);
-                } else if (cell.isOccupied()) {
-
+                if (cell.isOccupied()) {
                     int n;
                     g2.setColor(cell.owner().color());
                     n = board.findBombCount(row, col);

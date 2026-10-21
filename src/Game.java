@@ -9,14 +9,6 @@ public class Game {
     private Player bluePlayer;
     private Player currentPlayer;
 
-    public void switchPlayer() { 
-        if (currentPlayer == redPlayer) {
-            currentPlayer = bluePlayer;
-        } else {
-            currentPlayer = redPlayer;
-        }
-    }
-
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -44,56 +36,6 @@ public class Game {
             }
         }
         return null;
-    }
-    
-    public void print() {
-        board.print();
-    }
-
-    public int placePiece(int col, Boolean guessBomb) {
-        int row = board.findLandingRow(col);
-        if (row == -1) {
-            return -1;
-        }
-        guessCheck(row, col, guessBomb);
-        return row;
-    }
-
-    public void toggleFlag(int row, int col) {
-        Cell cell = board.cell(row, col);
-        if (!cell.isOccupied()) {
-            cell.setFlag(!cell.isFlagged());
-        }
-    } 
-
-    public boolean submitGuess(int row, int col, boolean guessedBomb) {
-        Cell cell = board.cell(row, col);
-        boolean correct = cell.isBomb() == cell.isFlagged();
-        if (correct) {
-            cell.setOwner(currentPlayer);
-        } else  {
-            switchPlayer();
-            cell.setOwner(currentPlayer);
-
-        }
-        return correct;
-
-    }
-
-    public void guessCheck(int row,int col, boolean guessedBomb) {
-        boolean correctGuess = guessedBomb == board.cell(row, col).isBomb();
-        if (correctGuess) {
-            
-            board.cell(row,col).setOwner(currentPlayer);
-            checkWinCondition(row, col);
-
-        } else {
-            
-            switchPlayer(); 
-            board.cell(row,col).setOwner(currentPlayer);
-            switchPlayer();
-            checkWinCondition(row, col);
-        }
     }
     
     public void init(Player first, Player second) {
@@ -124,10 +66,6 @@ public class Game {
         return board;
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
     private void game() {
 
         System.out.println("%s is the red player".formatted(redPlayer.name()));
@@ -142,7 +80,7 @@ public class Game {
 
         int row = board.findLandingRow(col);
         Player otherPlayer;
-
+        
         if (row == -1) {
             
             return;
@@ -154,6 +92,8 @@ public class Game {
         } else {
             otherPlayer = redPlayer;
         }
+        
+        System.out.println(otherPlayer.name());
 
         if (bombGuess == board.cell(row, col).isBomb()) {
             board.cell(row, col).setOwner(currentPlayer);
@@ -164,6 +104,7 @@ public class Game {
         Player victoriousPlayer = checkWinCondition(row, col);
         if (victoriousPlayer != null) {
 
+            System.out.println("you won");
             // add win logic here, victoriousPlayer is the Player object that won
 
         }
