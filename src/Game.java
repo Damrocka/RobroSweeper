@@ -7,8 +7,19 @@ public class Game {
     private Board board;
     private Player redPlayer;
     private Player bluePlayer;
-
     private Player currentPlayer;
+
+    public void switchPlayer() { 
+        if (currentPlayer == redPlayer) {
+            currentPlayer = bluePlayer;
+        } else {
+            currentPlayer = redPlayer;
+        }
+    }
+    public Player getPlayer() {
+        
+        return currentPlayer;
+    }
 
     public void newPlayer(String name) {
 
@@ -37,6 +48,51 @@ public class Game {
     
     public void print() {
         board.print();
+    }
+    public int placePiece(int col, Boolean guessBomb) {
+        int row = board.findLandingRow(col);
+        if (row == -1) {
+            return -1;
+        }
+        guessCheck(row, col, guessBomb);
+        return row;
+    }
+
+    public void toggleFlag(int row, int col) {
+        Cell cell = board.cell(row, col);
+        if (!cell.isOccupied()) {
+            cell.setFlag(!cell.isFlagged());
+        }
+    } 
+
+    public boolean submitGuess(int row, int col, boolean guessedBomb) {
+        Cell cell = board.cell(row, col);
+        boolean correct = cell.isBomb() == cell.isFlagged();
+        if (correct) {
+            cell.setOwner(currentPlayer);
+        } else  {
+            switchPlayer();
+            cell.setOwner(currentPlayer);
+
+        }
+        return correct;
+
+    }
+
+    public void guessCheck(int row,int col, boolean guessedBomb) {
+        boolean correctGuess = guessedBomb == board.cell(row, col).isBomb();
+        if (correctGuess) {
+            
+            board.cell(row,col).setOwner(currentPlayer);
+            checkWinCondition(row, col);
+
+        } else {
+            
+            switchPlayer(); 
+            board.cell(row,col).setOwner(currentPlayer);
+            switchPlayer();
+            checkWinCondition(row, col);
+        }
     }
     
     public void init(Player first, Player second) {

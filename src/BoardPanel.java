@@ -7,8 +7,18 @@ public class BoardPanel extends JPanel {
 
     private final Game game;
     private final Board board;
+    private enum Phase {
+        IDLE,
+        CHOOSING_GUESS
+
+    }
+    private boolean guessBomb;
+    private Phase phase = Phase.IDLE;
+    private int pendingColumn = -1;
+    private int pendingRow;
     private static final int CELL_SIZE = 80;
     private static final int PADDING = CELL_SIZE / 8;
+
 
     public BoardPanel(Game game) {
 
@@ -32,19 +42,60 @@ public class BoardPanel extends JPanel {
 
             int mouseX = e.getX();            
             int colnum;
-        
-            colnum = mouseX / CELL_SIZE;  
+            colnum = mouseX / CELL_SIZE;
+            
+            if (e.getButton() == MouseEvent.BUTTON2 && phase == Phase.CHOOSING_GUESS) {
+                pendingRow = board.findLandingRow(pendingColumn);
+                game.submitGuess(pendingRow,pendingColumn,guessBomb);
+                repaint();
+            }
+
+            if (phase != Phase.IDLE) {
+                return;
+            }
+
             if (!(colnum >= 0 && colnum < board.getCols())) {
                 return;
             } 
 
-            // do the game logic here!
+            if (board.findLandingRow(colnum) == -1) {
+                return;
+            }
 
-            //game.placePiece(colnum);
-            repaint();
+            if (e.getButton() == MouseEvent.BUTTON1) {
+                pendingColumn = colnum;
+                phase = Phase.CHOOSING_GUESS;
+                int row = board.findLandingRow(colnum);
+                 repaint();
+            }
+        
+            if (e.getButton() == MouseEvent.BUTTON1) {
+                pendingColumn = colnum;
+                phase = Phase.CHOOSING_GUESS;
+                guessBomb = true;
+                repaint();
+        
+            } else if (e.getButton() == MouseEvent.BUTTON3) {
+                pendingColumn = colnum;
+                
+                phase = Phase.CHOOSING_GUESS;
+                guessBomb = false;
+                repaint();
             
+            }
         }
+    }    
+            
+    private void onGuess(boolean guessBomb) {
+        if (phase != Phase.CHOOSING_GUESS) {
+            return;
+        }
+        game.placePiece(pendingColumn,guessBomb);
+        pendingColumn = -1;
+        phase = Phase.IDLE;
+        repaint();
     }
+    
 
     private void drawBomb(Graphics2D g2, int centerX, int centerY) {
 
@@ -58,6 +109,11 @@ public class BoardPanel extends JPanel {
         int bombCount = n;    
         drawCenteredText(g2, String.valueOf(bombCount), centerX, centerY);
         //g2.drawString(String.valueOf(bombNum), centerX + CELL_SIZE / 2, centerY + CELL_SIZE / 2);
+
+    }
+    private void drawFlag(Graphics2D g2, int centerX, int centerY) {
+   
+        drawCenteredText(g2, "F", centerX, centerY);
 
     }
 
@@ -98,26 +154,29 @@ public class BoardPanel extends JPanel {
                 Cell cell = board.cell(row, col);
                 int x = col  * CELL_SIZE;
                 int y = row * CELL_SIZE;
+                int centerX = x + CELL_SIZE / 2;
+                int centerY = y + CELL_SIZE / 2;
 
                 g2.setColor(Color.lightGray);
                 g2.fillRect(x + PADDING, y + PADDING,  CELL_SIZE - 2 * PADDING, CELL_SIZE - 2 * PADDING); 
-
                 g2.setColor(Color.BLACK);
                 g2.drawRect(x, y, CELL_SIZE, CELL_SIZE);
                 
-                if (cell.isOccupied()) {
-                    int centerX = x + CELL_SIZE / 2;
-                    int centerY = y + CELL_SIZE / 2;
+                if (cell.isFlagged()) {
+                    drawFlag(g2, centerX, centerY);
+                } else if (cell.isOccupied()) {
+
                     int n;
                     g2.setColor(cell.owner().color());
-                    
+                    n = board.findBombCount(row, col);
                     if (cell.isBomb()) {
-                        
+
                         drawBomb(g2, centerX, centerY);
+
                     } else { 
-                        n = board.findBombCount(row, col);
+                        
                         drawNumber(g2, centerX, centerY, n);
-                        //set up setFont, getFontMetrics(), stringWidth,getAscent, 
+                        
                     } 
                 }        
             }
