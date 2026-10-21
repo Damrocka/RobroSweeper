@@ -76,14 +76,14 @@ public class Game {
 
     }
 
-    public void placePiece(int col, boolean bombGuess) {
+    public MoveResult placePiece(int col, boolean bombGuess) {
 
         int row = board.findLandingRow(col);
         Player otherPlayer;
         
         if (row == -1) {
             
-            return;
+            return null;
 
         }
 
@@ -92,7 +92,7 @@ public class Game {
         } else {
             otherPlayer = redPlayer;
         }
-        
+
         System.out.println(otherPlayer.name());
 
         if (bombGuess == board.cell(row, col).isBomb()) {
@@ -103,16 +103,16 @@ public class Game {
 
         Player victoriousPlayer = checkWinCondition(row, col);
         if (victoriousPlayer != null) {
-
+            
             System.out.println("you won");
             // add win logic here, victoriousPlayer is the Player object that won
-
+            return new MoveResult(bombGuess == board.cell(row, col).isBomb(),victoriousPlayer);
         }
 
         currentPlayer = otherPlayer;
-
+        return new MoveResult(bombGuess == board.cell(row, col).isBomb(), null);
     }
-
+    
     private Player checkWinCondition(int row, int col) {
 
         // returns the player who won according to the tile

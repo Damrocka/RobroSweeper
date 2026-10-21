@@ -1,12 +1,11 @@
 
 import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.JLabel;
 
 public class Label extends JLabel {
     Label() {
-        this.setText("Omnomomnom");
-        //this.setHorizontalTextPosition(JLabel.CENTER); // We dont have icons at the moment
-        //this.setVerticalTextPosition(JLabel.TOP); //We dont have icons at the moment
+        this.setPreferredSize(new Dimension(120, 0));
         this.setHorizontalAlignment(CENTER);
         this.setVerticalAlignment(CENTER);
         this.setBackground(Color.CYAN);
