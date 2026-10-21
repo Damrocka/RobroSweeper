@@ -58,29 +58,10 @@ public class BoardPanel extends JPanel {
                 return;
             } 
 
-            if (board.findLandingRow(colnum) == -1) {
-                return;
-            }
+            // do the game logic here!
 
-            if (e.getButton() == MouseEvent.BUTTON1) {
-                pendingColumn = colnum;
-                phase = Phase.CHOOSING_GUESS;
-                int row = board.findLandingRow(colnum);
-                 repaint();
-            }
-        
-            if (e.getButton() == MouseEvent.BUTTON1) {
-                pendingColumn = colnum;
-                phase = Phase.CHOOSING_GUESS;
-                guessBomb = true;
-                repaint();
-        
-            } else if (e.getButton() == MouseEvent.BUTTON3) {
-                pendingColumn = colnum;
-                
-                phase = Phase.CHOOSING_GUESS;
-                guessBomb = false;
-                repaint();
+            //game.placePiece(colnum);
+            repaint();
             
             }
         }
