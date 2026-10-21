@@ -124,6 +124,10 @@ public class Game {
         return board;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     private void game() {
 
         System.out.println("%s is the red player".formatted(redPlayer.name()));
@@ -140,7 +144,9 @@ public class Game {
         Player otherPlayer;
 
         if (row == -1) {
+            
             return;
+
         }
 
         if (currentPlayer == redPlayer) {
