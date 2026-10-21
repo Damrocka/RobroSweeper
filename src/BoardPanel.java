@@ -7,11 +7,12 @@ public class BoardPanel extends JPanel {
 
     private final Game game;
     private final Board board;
+
     private enum Phase {
         IDLE,
         CHOOSING_GUESS
-
     }
+
     private boolean guessBomb;
     private Phase phase = Phase.IDLE;
     private int pendingColumn = -1;
@@ -46,7 +47,7 @@ public class BoardPanel extends JPanel {
             
             if (e.getButton() == MouseEvent.BUTTON2 && phase == Phase.CHOOSING_GUESS) {
                 pendingRow = board.findLandingRow(pendingColumn);
-                game.submitGuess(pendingRow,pendingColumn,guessBomb);
+                game.submitGuess(pendingRow, pendingColumn, guessBomb);
                 repaint();
             }
 
@@ -66,7 +67,7 @@ public class BoardPanel extends JPanel {
                 pendingColumn = colnum;
                 phase = Phase.CHOOSING_GUESS;
                 int row = board.findLandingRow(colnum);
-                 repaint();
+                repaint();
             }
         
             if (e.getButton() == MouseEvent.BUTTON1) {
@@ -90,12 +91,11 @@ public class BoardPanel extends JPanel {
         if (phase != Phase.CHOOSING_GUESS) {
             return;
         }
-        game.placePiece(pendingColumn,guessBomb);
+        game.placePiece(pendingColumn, guessBomb);
         pendingColumn = -1;
         phase = Phase.IDLE;
         repaint();
     }
-    
 
     private void drawBomb(Graphics2D g2, int centerX, int centerY) {
 
@@ -111,6 +111,7 @@ public class BoardPanel extends JPanel {
         //g2.drawString(String.valueOf(bombNum), centerX + CELL_SIZE / 2, centerY + CELL_SIZE / 2);
 
     }
+
     private void drawFlag(Graphics2D g2, int centerX, int centerY) {
    
         drawCenteredText(g2, "F", centerX, centerY);
