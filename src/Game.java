@@ -16,8 +16,8 @@ public class Game {
             currentPlayer = redPlayer;
         }
     }
-    public Player getPlayer() {
-        
+
+    public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
@@ -49,6 +49,7 @@ public class Game {
     public void print() {
         board.print();
     }
+
     public int placePiece(int col, Boolean guessBomb) {
         int row = board.findLandingRow(col);
         if (row == -1) {
