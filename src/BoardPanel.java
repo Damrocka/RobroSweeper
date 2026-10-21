@@ -109,7 +109,7 @@ public class BoardPanel extends JPanel {
                     int centerX = x + CELL_SIZE / 2;
                     int centerY = y + CELL_SIZE / 2;
                     int n;
-                    g2.setColor(stringToColor(cell.owner().color()));
+                    g2.setColor(cell.owner().color());
                     
                     if (cell.isBomb()) {
                         
