@@ -38,9 +38,10 @@ public class BoardPanel extends JPanel {
                 return;
             } 
 
-            // do the game logic here!
+            // change this!
+            boolean bombGuess = true;
 
-            //game.placePiece(colnum);
+            game.placePiece(colnum, bombGuess);
             repaint();
             
         }

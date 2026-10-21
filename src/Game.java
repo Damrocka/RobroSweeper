@@ -63,6 +63,10 @@ public class Game {
         game();
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     private void game() {
 
         System.out.println("%s is the red player".formatted(redPlayer.name()));
@@ -73,8 +77,36 @@ public class Game {
 
     }
 
-    public Board getBoard() {
-        return board;
+    public void placePiece(int col, boolean bombGuess) {
+
+        int row = board.findLandingRow(col);
+        Player otherPlayer;
+
+        if (row == -1) {
+            return;
+        }
+
+        if (currentPlayer == redPlayer) {
+            otherPlayer = bluePlayer;
+        } else {
+            otherPlayer = redPlayer;
+        }
+
+        if (bombGuess == board.cell(row, col).isBomb()) {
+            board.cell(row, col).setOwner(currentPlayer);
+        } else {
+            board.cell(row, col).setOwner(otherPlayer);
+        }
+
+        Player victoriousPlayer = checkWinCondition(row, col);
+        if (victoriousPlayer != null) {
+
+            // add win logic here, victoriousPlayer is the Player object that won
+
+        }
+
+        currentPlayer = otherPlayer;
+
     }
 
     private Player checkWinCondition(int row, int col) {
