@@ -83,7 +83,9 @@ public class Game {
         Player otherPlayer;
 
         if (row == -1) {
+            
             return;
+
         }
 
         if (currentPlayer == redPlayer) {
