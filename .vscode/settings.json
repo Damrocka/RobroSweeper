@@ -1,6 +1,5 @@
 {
     "checkstyle.configurationPath": "D:\\repo\\RobroSweeper\\checkstyle stuff\\2IP90_checks.xml",
-    "checkstyle.checkstylePath": "c:\\Tools\\Checkstyle\\checkstyle-10.3-all.jar",
-    "checkstyle.enable": true,
-    "jdk.runConfig.vmOptions": "-Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8"
+    "checkstyle.checkstylePath": "C:\\Tools\\Checkstyle\\checkstyle-10.3-all.jar",
+    "checkstyle.enable": true
 }

@@ -44,7 +44,8 @@ public class BoardPanel extends JPanel {
         Dimension dim = new Dimension(cols * CELL_SIZE, rows * CELL_SIZE);
 
         this.setPreferredSize(dim);
-    }   
+    }
+    
     private class BoardClickListener extends MouseAdapter {
         
         @Override 

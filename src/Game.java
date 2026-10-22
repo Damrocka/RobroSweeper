@@ -106,7 +106,7 @@ public class Game {
             
             System.out.println("you won");
             // add win logic here, victoriousPlayer is the Player object that won
-            return new MoveResult(bombGuess == board.cell(row, col).isBomb(),victoriousPlayer);
+            return new MoveResult(bombGuess == board.cell(row, col).isBomb(), victoriousPlayer);
         }
 
         currentPlayer = otherPlayer;
