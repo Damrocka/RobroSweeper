@@ -50,8 +50,8 @@ public class Game {
         game();
     }
 
-    public void init(Player first, Player second, Float bombDensity) {
-        board = new Board(bombDensity);
+    public void init(Player first, Player second, Float bombChance) {
+        board = new Board(bombChance);
 
         redPlayer = first;
         redPlayer.setColor(Color.RED);

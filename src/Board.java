@@ -21,7 +21,7 @@ public class Board {
     }
 
     // make a board with bombs, bomb density is a value from 0.0 to 1.0 with 0.0 for no bombs, 1.0 for 100% bombs
-    public Board(float bombDensity) {
+    public Board(float bombChance) {
         
         cells = new Cell[ROWS][COLS];
 
@@ -29,7 +29,7 @@ public class Board {
             for (int col = 0; col < COLS; col++) {
 
                 cells[row][col] = new Cell();
-                if (Math.random() < bombDensity) {
+                if (Math.random() < bombChance) {
                     cells[row][col].setBombValue(true);
                 }
 

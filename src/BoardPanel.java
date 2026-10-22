@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,6 +37,7 @@ public class BoardPanel extends JPanel {
         }
         this.addMouseListener(new BoardClickListener());
         this.setBackground(Color.white);
+        updateTurnBorder();
 
         int rows = board.getRows();
         int cols = board.getCols();
@@ -43,7 +45,6 @@ public class BoardPanel extends JPanel {
 
         this.setPreferredSize(dim);
     }   
-
     private class BoardClickListener extends MouseAdapter {
         
         @Override 
@@ -89,9 +90,14 @@ public class BoardPanel extends JPanel {
                 showWinner(moveResult.winner());
             }
             
+            updateTurnBorder();
             repaint();   
         }
     }    
+
+    private void updateTurnBorder() {
+        setBorder(BorderFactory.createLineBorder(game.getCurrentPlayer().color(), 8));
+    }
             
     private void drawBomb(Graphics2D g2, int centerX, int centerY, Player owner) {
         
