@@ -1,3 +1,6 @@
 *.class
 /.vscode
 /checkstyle stuff
+/target
+/checkstyle
+/.vscode
